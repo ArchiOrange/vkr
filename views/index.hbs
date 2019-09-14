@@ -1,0 +1,110 @@
+
+<!DOCTYPE html><html class=''>
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="public/stylesheets/bootstrap/css/bootstrap.css">
+<script src="public/jquery-3.3.1.js"></script>
+<script src="public/stylesheets/bootstrap/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js"></script>
+<link rel="stylesheet" href="/public/stylesheets/chatStyle.css">
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+</head>
+<body>
+	<button type="button"  id="connectButton" name="button">webRTC</button>
+<div id="frame">
+	<div id="sidepanel">
+		<div id="profile">
+			<div class="wrap">
+				<img id="profile-img" src="{{static.photo}}" class="online" alt="" />
+				<p>{{static.login}}</p>
+				<a href="/logout"><i class="fa  fa-sign-out expand-button" title="Выйти" aria-hidden="true"></i></a>
+
+			</div>
+		</div>
+    <div id="search">
+			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+			<input  name="search" type="text" placeholder="Search contacts...">
+      <ul  id="result" class="list-group">
+      </ul>
+		</div>
+		<div id="contacts">
+			<ul>
+				{{#each contact}}
+				<li class="contact" data-user-id="{{id}}" data-list-id= "{{id_room}}">
+					<div class="wrap">
+						<img src="{{photo}}" alt="" />
+						<div class="meta">
+							<p class="name">{{login}}</p>
+							<p class="preview">{{sender}}{{textMes}}</p>
+						</div>
+					</div>
+				</li>
+				{{/each}}
+			</ul>
+		</div>
+		<div id="bottom-bar">
+			<button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+		</div>
+	</div>
+	<div class="content">
+		<div class="contact-profile">
+      <img src="{{static.companionPhoto}}" alt="" />
+			<p>{{static.companionLogin}}</p>
+			<div class="social-media">
+				 <button type="button" class="btn btn-secondary">Вторичный</button>
+			</div>
+		</div>
+		<div id="message" class="messages">
+			<ul>
+				{{#each message}}
+				<li class="{{sender}}">
+					<p>{{textMes}}</p>
+				</li>
+				{{/each}}
+				<!-- <li>
+					<div class="alert alert-danger" role="alert">Это уведомление об опасности — check it out!</div>
+				</li> -->
+			</ul>
+		</div>
+		<div class="message-input">
+			<div class="wrap">
+			<input type="text" placeholder="Write your message..." />
+			<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" data-show='false' tabindex="-1" role="dialog" contact-id="" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea required placeholder="Ваше сообщение"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-primary">Отправить</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+	$('#button1').on('click',function () {
+		$('#exampleModal').modal('show');
+		console.log('sdasfasf');
+	})
+</script>
+<script src="/public/scripts/searh.js"></script>
+<script src="/public/scripts/sendMes.js"></script>
+<script src="/public/scripts/selectContact.js"></script>
+</body>
+</html>

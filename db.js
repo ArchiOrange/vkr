@@ -4,7 +4,7 @@ exports.connection= function () {
   var MysqlClient = Mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'fcirk',
+  password : 'fcirk00',
   database : 'chats'
 });
 
@@ -14,7 +14,7 @@ exports.get = function () {
   var MysqlClient = Mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'fcirk',
+  password : 'fcirk00',
   database : 'chats'})
 
   return MysqlClient;
@@ -22,6 +22,6 @@ exports.get = function () {
 exports.options = {
   host     : 'localhost',
   user     : 'root',
-  password : 'fcirk',
+  password : 'fcirk00',
   database : 'chats'
 };
