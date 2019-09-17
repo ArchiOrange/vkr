@@ -12,10 +12,12 @@ data = JSON.stringify(data);
         data: data,
         contentType: "application/json",
         success: function (result) {
+
           $('div.contact-profile img').attr('src',companion.photo);
           $('div.contact-profile p').text(companion.name);
           $('div#contacts ul li').attr('class',"contact")
           $(companion.ukatel).attr('class','contact active');
+          $(companion.ukatel).find('span.contact-status.online').detach()
           $('div.messages').html(result);
           $('#message').scrollTop($('#message').prop('scrollHeight'));
         }

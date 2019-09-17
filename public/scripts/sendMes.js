@@ -1,6 +1,3 @@
-var firstFrend = $('#contacts ul li.contact').first()
-$(firstFrend).attr('class','contact active');
-$('#message').scrollTop($('#message').prop('scrollHeight'));
 $('.modal-footer .btn.btn-primary').on('click',function () {
 
     $('#exampleModal').modal('toggle');

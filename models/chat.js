@@ -55,12 +55,23 @@ exports.insertMessage = function(recipient,id_room,sender,textMessage, cb){
 exports.getAllMessage = function (id,cb){
   let sql = "SELECT  message.*, login,users.id,photo, room_id FROM chats.message, chats.accesslist,chats.users where partisipant = users.id and partisipant !='"+id+"' and room_id= id_room  and  room_id in  (SELECT accesslist.room_id FROM chats.accesslist where partisipant != '"+id+"' and room_id in (SELECT room_id FROM chats.accesslist where partisipant = '"+id+"')) order by id_room,dateMessage ";
   MySql.get().query(sql, function (err,result) {
-    console.log('models',result);
     cb(err,result);
   })
 }
 exports.getMessageForOneRoom = function (idRoom,cb) {
   let sql = "SELECT * FROM chats.message WHERE id_room = '"+idRoom+"' order by dateMessage";
+  MySql.get().query(sql, function (err,result) {
+    cb(err,result);
+  })
+}
+exports.getNoReadingMessage = function (id,cb) {
+  let sql = "SELECT * FROM chats.message where sender != '"+id+"' and message.status = 0 and   id_room in (SELECT room_id FROM chats.accesslist WHERE partisipant = '"+id+"') order by id_room,dateMessage"
+  MySql.get().query(sql, function (err,result) {
+    cb(err,result);
+  })
+}
+exports.readingMessages = function (id,idRoom,cb) {
+  let sql = "UPDATE message SET status = '1' WHERE status = '0' and id_room = '"+idRoom+"' and sender != '"+id+"'"
   MySql.get().query(sql, function (err,result) {
     cb(err,result);
   })

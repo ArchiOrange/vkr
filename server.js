@@ -1,3 +1,5 @@
+var PeerServer = require('peer').PeerServer;
+var server = PeerServer({port: 9000, path: '/myapp'});
 var express = require ('express');
 var bodyParser = require ('body-parser');
 var db = require('./db');
@@ -65,7 +67,7 @@ app.all('/index',loginControllers.auth,chatControllers.index);
 app.post('/searchcontact',chatControllers.searchcontact);
 app.post('/sendMes',loginControllers.auth,chatControllers.findCompanion);
 app.get('/exit',loginControllers.loginDesktop);
-app.get('/l',loginControllers.auth,chatControllers.l)
+app.get('/newdata',loginControllers.auth,chatControllers.getNoReadingMessage)
 //apiDesktop
 app.get('/e',loginControllers.auth,apiDesktopControllers.getUsersOnline);
 

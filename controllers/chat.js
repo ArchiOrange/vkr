@@ -49,6 +49,9 @@ exports.index = function (req,res){
       }
       res.render('dialog',{result});
     })
+    Chat.readingMessages(req.user.session.passport.user.id,req.body.room,function (err,result) {
+      console.log(err,result);
+    })
   }
 else{
   // Chat.availableRooms(req.user.session.passport.user.id, function (err,result,failed) {
@@ -151,7 +154,34 @@ exports.findCompanion = function (req,res) {
   })
 
 }
-exports.l = function (req,res) {
-  res.json(req.body.conn)
+exports.getNoReadingMessage = function (req,res) {
+  Chat.getNoReadingMessage(req.user.session.passport.user.id,function (err,result) {
+    var loadingData = []
+    var activeMessage = []
+    var j = 1;
+    var k = 0;
+    var m = 0;
+    for (var i = 0; i < result.length; i++) {//0123456789 10 11
+      if(i == result.length-1 ||result[i].id_room != result[i+1].id_room){//0123
+        loadingData[k] = result[i]
+        loadingData[k].contMes = j
+        j = 1
+        k++;
+        if (result[i].id_room==req.query.room) {
+          activeMessage[m] = result[i];
+          m++;
+        }
+      }
+      else if (result[i].id_room==req.query.room) {
+        activeMessage[m] = result[i];
+        m++;
+        j++;
+      }
+      else{
+        j++;
+      }
+    }
+    res.json({activeMessage:activeMessage,loadingData:loadingData})
+  })
 
 }
