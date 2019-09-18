@@ -76,3 +76,23 @@ exports.readingMessages = function (id,idRoom,cb) {
     cb(err,result);
   })
 }
+
+exports.addSessionRTC = function (senderID,receiveID,keySender,cb) {
+  let sql = "INSERT INTO chats.datartc (senderID, receiveID, keySender) VALUES ('"+senderID+"', '"+receiveID+"', '"+keySender+"')"
+  MySql.get().query(sql, function (err,result) {
+    cb(err,result);
+  })
+}
+exports.checkReqRTCConection = function (id,cb) {
+  let sql = "SELECT * FROM datartc WHERE receiveID ='"+id+"'"
+  MySql.get().query(sql, function (err,result) {
+    cb(err,result);
+  })
+}
+exports.delSessionRTC = function (senderID,receiveID,cb) {
+  console.log(senderID,receiveID);
+  let sql = "DELETE FROM chats.datartc WHERE senderID = '"+senderID+"' AND receiveID = '"+receiveID+"'"
+  MySql.get().query(sql, function (err,result) {
+    cb(err,result);
+  })
+}

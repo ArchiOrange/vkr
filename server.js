@@ -70,12 +70,12 @@ app.get('/exit',loginControllers.loginDesktop);
 app.get('/newdata',loginControllers.auth,chatControllers.getNoReadingMessage)
 //apiDesktop
 app.get('/e',loginControllers.auth,apiDesktopControllers.getUsersOnline);
-
+app.post('/tunnel',loginControllers.auth,chatControllers.chekUserStatus);
 db.connect('mongodb://localhost:27017/myapi', function (err){
   if (err){
   return console.log(err);
   }
-  app.listen(3000,function(){
+  app.listen(3000,'192.168.100.6',function(){
     console.log ('server up');
     })
  })

@@ -1,3 +1,4 @@
+function selectContact() {
   $('li.contact').on('click', function(){
     var data= {};
     var companion = {}
@@ -24,3 +25,5 @@ data = JSON.stringify(data);
 
          });
 });
+
+}

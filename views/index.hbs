@@ -1,18 +1,18 @@
 
 <!DOCTYPE html><html class=''>
 <head>
+	<script src="https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js"></script>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="public/stylesheets/bootstrap/css/bootstrap.css">
-<script src="public/jquery-3.3.1.js"></script>
+<script id="jquery" src="public/jquery-3.3.1.js"></script>
 <script src="public/stylesheets/bootstrap/js/bootstrap.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js"></script>
 <link rel="stylesheet" href="/public/stylesheets/chatStyle.css">
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 </head>
 <body>
-	<button type="button"  id="connectButton" name="button">webRTC</button>
+	<button type="button" id="sendRTC" name="button"></button>
 <div id="frame">
 	<div id="sidepanel">
 		<div id="profile">
@@ -53,7 +53,7 @@
       <img src="{{static.companionPhoto}}" alt="" />
 			<p>{{static.companionLogin}}</p>
 			<div class="social-media">
-				 <button type="button" class="btn btn-secondary">Открыть тунель</button>
+				 <button type="button" id="creatTunnel" class="btn btn-secondary">Открыть тунель</button>
 			</div>
 		</div>
 		<div id="message" class="messages">
@@ -63,9 +63,9 @@
 					<p>{{textMes}}</p>
 				</li>
 				{{/each}}
-				<!-- <li>
-					<div class="alert alert-danger" role="alert">Это уведомление об опасности — check it out!</div>
-				</li> -->
+				<li>
+					<div class="alert alert-danger" id="warning" style="display: none;" role="alert">Сообщения не будут храниться на сервере</div>
+				</li>
 			</ul>
 		</div>
 		<div class="message-input">
@@ -106,6 +106,7 @@
 <script src="/public/scripts/searh.js"></script>
 <script src="/public/scripts/sendMes.js"></script>
 <script src="/public/scripts/main.js"></script>
+<script src="/public/scripts/creatTunnel.js"></script>
 <script src="/public/scripts/selectContact.js"></script>
 </body>
 </html>

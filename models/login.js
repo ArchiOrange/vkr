@@ -14,3 +14,8 @@ exports.selectSession = function (id,cb){
   cb(err,doc);
   })
 }
+exports.chekUserStatus = function (id,cb){
+  db.get().collection('mySessions').findOne({"session.passport.user.id": id},function (err,doc){
+  cb(err,doc);
+  })
+}

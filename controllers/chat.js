@@ -50,7 +50,7 @@ exports.index = function (req,res){
       res.render('dialog',{result});
     })
     Chat.readingMessages(req.user.session.passport.user.id,req.body.room,function (err,result) {
-      console.log(err,result);
+      //console.log(err,result);
     })
   }
 else{
@@ -155,33 +155,62 @@ exports.findCompanion = function (req,res) {
 
 }
 exports.getNoReadingMessage = function (req,res) {
-  Chat.getNoReadingMessage(req.user.session.passport.user.id,function (err,result) {
-    var loadingData = []
-    var activeMessage = []
-    var j = 1;
-    var k = 0;
-    var m = 0;
-    for (var i = 0; i < result.length; i++) {//0123456789 10 11
-      if(i == result.length-1 ||result[i].id_room != result[i+1].id_room){//0123
-        loadingData[k] = result[i]
-        loadingData[k].contMes = j
-        j = 1
-        k++;
-        if (result[i].id_room==req.query.room) {
+  Chat.checkReqRTCConection(req.user.session.passport.user.id,function (err,resultcheckReqRTCConection) {
+    //console.log('resultcheckReqRTCConection:',resultcheckReqRTCConection);
+    if(resultcheckReqRTCConection != 0){
+      Chat.delSessionRTC(resultcheckReqRTCConection[0].senderID,resultcheckReqRTCConection[0].receiveID,function (err,result) {
+      //  console.log('delSessionRTC err:',err);
+      })
+    }
+    Chat.getNoReadingMessage(req.user.session.passport.user.id,function (err,result) {
+      var loadingData = []
+      var activeMessage = []
+      var j = 1;
+      var k = 0;
+      var m = 0;
+      console.log('userID:',req.user.session.passport.user.id);
+      console.log("result::",result);
+      if( undefined == result.length){
+        console.log('ебаная ошибка');
+        console.log(req.user.session.passport.user.id)}
+      for (var i = 0; i < result.length; i++) {//0123456789 10 11
+        if(i == result.length-1 ||result[i].id_room != result[i+1].id_room){//0123
+          loadingData[k] = result[i]
+          loadingData[k].contMes = j
+          j = 1
+          k++;
+          if (result[i].id_room==req.query.room) {
+            activeMessage[m] = result[i];
+            m++;
+          }
+        }
+        else if (result[i].id_room==req.query.room) {
           activeMessage[m] = result[i];
           m++;
+          j++;
+        }
+        else{
+          j++;
         }
       }
-      else if (result[i].id_room==req.query.room) {
-        activeMessage[m] = result[i];
-        m++;
-        j++;
-      }
-      else{
-        j++;
-      }
+      res.json({activeMessage:activeMessage,loadingData:loadingData,RTCConection:resultcheckReqRTCConection})
+      //console.log("activeMessage:",activeMessage,'loadingData:',loadingData,'RTCConection:',resultcheckReqRTCConection);
+    })
+  })
+
+}
+exports.chekUserStatus = function (req,res) {
+  console.log(typeof id);
+  Login.chekUserStatus(+req.body.idCompanion,function (err,docs) {
+    if(docs!=null){
+      Chat.addSessionRTC(req.user.session.passport.user.id,req.body.idCompanion,req.body.unicID,function(err,result) {
+        console.log('chekUserStatus:data not inserd',err);
+      })
+      res.json(true)
     }
-    res.json({activeMessage:activeMessage,loadingData:loadingData})
+    else{
+      res.json(false)
+    }
   })
 
 }
